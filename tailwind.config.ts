@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
 	darkMode: ["class"],
@@ -18,12 +19,15 @@ export default {
 			}
 		},
 		extend: {
+      fontFamily: {
+        sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+      },
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				background: 'hsl(var(--background))', // Will use --background (PRD Surface #FFFFFF)
+				foreground: 'hsl(var(--foreground))', // Will use --foreground (PRD Primary Text #212529)
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -61,12 +65,18 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        // Custom named colors from PRD, mapped to their CSS variables for utility class generation
+        'page-bg': 'hsl(var(--page-background-app))', // For utilities like bg-page-bg
+        'accent-orange': 'hsl(var(--custom-accent-orange))',
+        'accent-green': 'hsl(var(--custom-accent-green))',
 			},
 			borderRadius: {
+        // Uses --radius from CSS which is now 0.375rem (6px, rounded-md)
+        // So 'lg' here will be 0.375rem.
 				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				md: 'calc(var(--radius) - 2px)', // 0.375rem - 2px = 4px (rounded-sm)
+				sm: 'calc(var(--radius) - 4px)'  // 0.375rem - 4px = 2px ( ~rounded-xs / custom small)
 			},
 			keyframes: {
 				'accordion-down': {
