@@ -1,57 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* PRD Colors mapped to Shadcn/Radix CSS Variables (Light Theme) */
+    --page-background-app: 240 27% 96%; /* PRD: background (#F3F3F9) - Custom name for overall page BG */
+    --background: 0 0% 100%;           /* PRD: surface (#FFFFFF) - For components like cards, popovers */
+    --foreground: 210 14% 15%;         /* PRD: primaryText (#212529) */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;                 /* PRD: surface (#FFFFFF) */
+    --card-foreground: 210 14% 15%;    /* PRD: primaryText (#212529) */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;              /* PRD: surface (#FFFFFF) */
+    --popover-foreground: 210 14% 15%; /* PRD: primaryText (#212529) */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 202 71% 51%;            /* PRD: accentBlue (#299CDB) */
+    --primary-foreground: 0 0% 100%;   /* White for contrast */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 27% 96%;          /* PRD: background (#F3F3F9) - Used for secondary UI elements */
+    --secondary-foreground: 210 14% 15%;/* PRD: primaryText (#212529) for contrast */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 27% 96%;              /* PRD: background (#F3F3F9) - For muted UI elements */
+    --muted-foreground: 228 10% 57%;   /* PRD: secondaryText (#878A99) */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 202 71% 51%;             /* PRD: accentBlue (#299CDB) - General accent */
+    --accent-foreground: 0 0% 100%;    /* White for contrast */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 10 86% 61%;         /* PRD: accentRed (#F06548) */
+    --destructive-foreground: 0 0% 100%;/* White for contrast */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 11% 92%;             /* PRD: border (#E9EBEC) */
+    --input: 210 11% 92%;              /* PRD: border (#E9EBEC) - Often same as border */
+    --ring: 202 71% 51%;               /* PRD: accentBlue (#299CDB) - For focus rings */
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;                 /* PRD: borderRadius.default (rounded-md, 6px) */
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar specific variables from PRD */
+    --sidebar-background: 210 17% 91%;   /* PRD: sidebar (#E4E7EA) */
+    --sidebar-foreground: 210 14% 15%;   /* PRD: primaryText (#212529) */
+    --sidebar-primary: 202 71% 51%;      /* PRD: accentBlue (#299CDB) for active/selected sidebar items */
+    --sidebar-primary-foreground: 0 0% 100%; /* White */
+    --sidebar-accent: 210 14% 88%;       /* Slightly darker than sidebar-background for hover (#DDE1E4) */
+    --sidebar-accent-foreground: 210 14% 15%; /* PRD: primaryText */
+    --sidebar-border: 210 11% 92%;       /* PRD: border (#E9EBEC) */
+    --sidebar-ring: 202 71% 51%;         /* PRD: accentBlue (#299CDB) */
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom accent colors from PRD */
+    --custom-accent-orange: 42 96% 50%;  /* PRD: accentOrange (#FAB005) */
+    --custom-accent-green: 170 89% 37%;  /* PRD: accentGreen (#0AB39C) */
   }
 
   .dark {
+    /* Existing dark mode variables are preserved as PRD doesn't specify dark theme */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -79,6 +82,9 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    /* --radius is inherited from :root */
+
+    /* Preserving original dark sidebar variables */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -87,15 +93,21 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* PRD custom accents don't have specified dark versions, so they'd use light mode values or need specific dark definitions here */
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border; /* Uses hsl(var(--border)) from theme */
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--page-background-app)); /* Apply PRD's main background color */
+    color: hsl(var(--foreground)); /* Apply PRD's primary text color */
+    /* Font family 'Nunito' will be applied by Tailwind's base styles via tailwind.config.ts */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
